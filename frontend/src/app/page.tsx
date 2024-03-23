@@ -3,10 +3,13 @@ import Image from "next/image";
 import { Space_Grotesk } from 'next/font/google'
 import { ChangeEvent, useState } from "react";
 import './globals.css';
+
 const space500 = Space_Grotesk({ subsets: ['latin'], weight: ["500"], style: ["normal"] });
+const space400 = Space_Grotesk({ subsets: ['latin'], weight: ["400"], style: ["normal"] });
 
 export default function Home() {
-  const [inputData, setInputData] = useState('asdf \n dsf');
+  const placeholder = 'Frame Name: Just build it.\n\n--Frame One--\nTitle: Mint Page\nImage URL: https://proxy.wrpcd.net/?url=https%3A%2F%2Fzora.co%2Fapi%2Fthumbnail%2F8453%2F0xb0d94258bcee18c3fcfbd6b0ac336cdf4e2b67a9%2F1&s=23ee0c7e36f37b9f75950857aef51559f1019aa71a3ce55e006769642b2ffd2c\nImage ratio: 1:1\nButtons:\n1. "Mint", uses this contract: 0xb0d94258bcee18c3fcfbd6b0ac336cdf4e2b67a9';
+  const [inputData, setInputData] = useState(placeholder);
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setInputData(event.target.value);
   };
@@ -14,6 +17,7 @@ export default function Home() {
   const handleSubmit = () => {
 
   }
+  
   return (
     <div className="overflow-hidden h-screen flex flex-col items-center">
       <div className={`${space500.className} text-3xl`} style={{ marginTop: '5vh' }}>FrameGPT</div>
@@ -27,9 +31,9 @@ export default function Home() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="flex flex-col items-center">
-        <div>enter data</div>
-        <textarea className="multiline-placeholder" value={inputData} onChange={handleChange}></textarea>
+      <form onSubmit={handleSubmit} className="flex flex-col items-center mt-6">
+        <div className={`${space400.className}`}>~ The input below works as is, hit Generate to try it out! ~</div>
+        <textarea className={`${space400.className} rounded border border-gray-300 w-full h-96 p-2 overflow-x-auto`} style={{ whiteSpace: 'nowrap' }}  value={inputData} onChange={handleChange}></textarea>
         <div className="w-36 h-8 rounded mt-5 flex flex-col justify-center" style={{ backgroundColor: '#7c65c1' }}>
           <div className=" flex flex-col justify-center">
             <button type="submit" className={`${space500.className} text-md text-center text-white`}>✨ Generate ✨</button>
