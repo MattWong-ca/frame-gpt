@@ -28,10 +28,8 @@ export default function Home() {
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
-        {/* <label> */}
-          <div>enter data</div>
-          <textarea className="multiline-placeholder" value={inputData} onChange={handleChange}></textarea>
-        {/* </label> */}
+        <div>enter data</div>
+        <textarea className="multiline-placeholder" value={inputData} onChange={handleChange}></textarea>
         <div className="w-36 h-8 rounded mt-5 flex flex-col justify-center" style={{ backgroundColor: '#7c65c1' }}>
           <div className=" flex flex-col justify-center">
             <button type="submit" className={`${space500.className} text-md text-center text-white`}>✨ Generate ✨</button>
