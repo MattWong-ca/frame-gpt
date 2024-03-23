@@ -2,3 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.multiline-placeholder::placeholder {
+  /* Set your multiline placeholder text here */
+  content: 'Line 1\nLine 2\nLine 3';
+  /* Adjust other styling properties as needed */
+  font-size: 14px;
+  line-height: 20px;
+}
