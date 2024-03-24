@@ -197,8 +197,6 @@ export default function Home() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await fetchDataFromOpenAI();
-    // await new Promise(resolve => setTimeout(resolve, 2000));
-    // await fetchNeynarData();
   }
   useEffect(() => {
     if (openAIResponse) {
@@ -214,7 +212,6 @@ export default function Home() {
         texts={["Make a frame that mints a Base NFT", "Make a gallery of photos", "Build an onchain checkout flow"]}
         period={150}
       />
-      {/* <div className={`${space500.className} text-2xl`} style={{ marginTop: '5px' }}>Make a frame that mints a Base NFT</div> */}
       <div className="w-80 h-8 rounded mt-5 border-2 flex" style={{ borderColor: '#7c65c1' }}>
         <div className="w-1/2 h-full border-r-2 flex flex-col justify-center" style={{ backgroundColor: isMakeFrame ? '#7c65c1' : 'white', borderColor: '#7c65c1' }}>
           <div onClick={() => setIsMakeFrame(true)} className={`${space500.className} text-md text-center text-white`} style={{ color: isMakeFrame ? 'white' : '#7c65c1' }}>Make a Frame</div>
@@ -223,10 +220,8 @@ export default function Home() {
           <div onClick={() => setIsMakeFrame(false)} className={`${space500.className} text-md text-center`} style={{ color: isMakeFrame ? '#7c65c1' : 'white' }}>Examples</div>
         </div>
       </div>
-
       {isMakeFrame ? (
         <>
-
           <form onSubmit={handleSubmit} className="flex flex-col items-center mt-6">
             <div className={`${space400.className}`}>~ The input below works as is, hit Generate to try it out! ~</div>
             <textarea className={`${space400.className} rounded border border-gray-300 w-full h-96 p-2 overflow-x-auto`} style={{ whiteSpace: 'nowrap' }} value={inputData} onChange={handleChange}></textarea>
@@ -239,8 +234,6 @@ export default function Home() {
                 </div>
               </div>
             )}
-
-
           </form>
           {neynarLink &&
             <a href={`https://warpcast.com/~/developers/frames?url=${neynarLink}`} target="_blank" rel="noopener noreferrer">
@@ -323,11 +316,7 @@ export default function Home() {
             1. Back, goes to Page 2
             <br></br>
             2. Home, goes to Page One
-
           </div>
-
-
-
         </div>
       )}
     </div>
