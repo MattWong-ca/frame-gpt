@@ -3,7 +3,6 @@ import Image from "next/image";
 import { Space_Grotesk } from 'next/font/google'
 import { ChangeEvent, useState } from "react";
 import './globals.css';
-import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
 
 const space500 = Space_Grotesk({ subsets: ['latin'], weight: ["500"], style: ["normal"] });
@@ -135,7 +134,7 @@ Here's the expected JSON for this example:
   }
 `;
 export default function Home() {
-  const openai = new OpenAI();
+  const openai = new OpenAI( { apiKey: process.env.OPENAI_API_KEY});
 
 
   async function test() {
