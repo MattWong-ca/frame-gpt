@@ -178,7 +178,7 @@ export default function Home() {
       method: 'POST',
       headers: {
         accept: 'application/json',
-        api_key: 'NEYNAR_API_DOCS',
+        api_key: process.env.NEYNAR_API_KEY!,
         'content-type': 'application/json'
       },
       body: openAIResponse
