@@ -5,7 +5,6 @@ import { Space_Grotesk } from 'next/font/google'
 import { ChangeEvent, useEffect, useState } from "react";
 import './globals.css';
 import OpenAI from "openai";
-import ClipLoader from "react-spinners/ClipLoader";
 import Typewriter from '../../pages/page';
 
 const space500 = Space_Grotesk({ subsets: ['latin'], weight: ["500"], style: ["normal"] });
@@ -161,7 +160,7 @@ export default function Home() {
   const [inputData, setInputData] = useState(placeholder);
   const [isMakeFrame, setIsMakeFrame] = useState(true);
   const [neynarLink, setNeynarLink] = useState()
-  const openai = new OpenAI({ apiKey: "", dangerouslyAllowBrowser: true });
+  const openai = new OpenAI({ apiKey: "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", dangerouslyAllowBrowser: true });
 
   async function fetchDataFromOpenAI() {
     setOpenAILoading(true);
