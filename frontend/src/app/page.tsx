@@ -226,7 +226,7 @@ export default function Home() {
 
       {isMakeFrame ? (
         <>
-        
+
           <form onSubmit={handleSubmit} className="flex flex-col items-center mt-6">
             <div className={`${space400.className}`}>~ The input below works as is, hit Generate to try it out! ~</div>
             <textarea className={`${space400.className} rounded border border-gray-300 w-full h-96 p-2 overflow-x-auto`} style={{ whiteSpace: 'nowrap' }} value={inputData} onChange={handleChange}></textarea>
@@ -234,13 +234,13 @@ export default function Home() {
               <div className="loader mt-5"></div>
             ) : (
               <div className="w-36 h-8 rounded mt-5 flex flex-col justify-center" style={{ backgroundColor: '#7c65c1' }}>
-              <div className=" flex flex-col justify-center">
-                <button className={`${space500.className} text-md text-center text-white`}>✨ Generate ✨</button>
+                <div className=" flex flex-col justify-center">
+                  <button className={`${space500.className} text-md text-center text-white`}>✨ Generate ✨</button>
+                </div>
               </div>
-            </div>
             )}
-            
-            
+
+
           </form>
           {neynarLink &&
             <a href={`https://warpcast.com/~/developers/frames?url=${neynarLink}`} target="_blank" rel="noopener noreferrer">
@@ -249,8 +249,85 @@ export default function Home() {
           }
         </>
       ) : (
-        <div className={`${space400.className} flex flex-col items-center mt-6`}>
-          <div>Coming soon!</div>
+        <div className={`${space400.className} flex flex-col items-center mt-6 overflow-y-auto`}>
+          <div className={`${space400.className} rounded border p-2 pb-10 overflow-x-auto`} style={{ width: '450px', whiteSpace: 'nowrap' }}>
+            ️💰 One Page Mint ️💰
+            <br></br>
+            <br></br>
+            Frame Name: Sample Mint
+            <br></br>
+            Title: Page One
+            <br></br>
+            Image URL: https://cloudflare-ipfs.com/ipfs/QmajRLF79ZG3P1iq2WfY5H2SxbACqVZU6LxqLiQBEaWAP9
+            <br></br>
+            Image ratio: 1:1
+            <br></br>
+            Buttons:
+            <br></br>
+            1. Mint, uses this contract: 0xb0d94258bcee18c3fcfbd6b0ac336cdf4e2b67a9
+            <br></br>
+            <br></br>
+            <br></br>
+            🖼️ Multi-frame, multi-options 🖼️
+            <br></br>
+            <br></br>
+            Frame Name: Frame Name
+            <br></br>
+            <br></br>
+            --Frame One--
+            <br></br>
+            Title: Page One
+            <br></br>
+            Image URL: https://cloudflare-ipfs.com/ipfs/QmajRLF79ZG3P1iq2WfY5H2SxbACqVZU6LxqLiQBEaWAP9
+            <br></br>
+            Image ratio: 1:1
+            <br></br>
+            Buttons:
+            <br></br>
+            1. Learn more, redirect to https://www.coinbase.com/
+            <br></br>
+            2. Next page, goes to Page 2
+            <br></br>
+            <br></br>
+            --Frame Two--
+            <br></br>
+            Title: Page 2
+            <br></br>
+            Image URL: https://cloudflare-ipfs.com/ipfs/QmUYMKFHqwxyX6LpZyGT7LMcDmo7SdoKmrQVXvPa8zkk9k
+            <br></br>
+            Aspect ratio: 1:1
+            <br></br>
+            Buttons:
+            <br></br>
+            1. Mint, use this contract: 0xb0d94258bcee18c3fcfbd6b0ac336cdf4e2b67a9
+            <br></br>
+            2. Learn more, link to https://www.coinbase.com/
+            <br></br>
+            3. Back, goes to Page One
+            <br></br>
+            4. Next, goes to Third Page
+            <br></br>
+            <br></br>
+            --Frame Three--
+            <br></br>
+            Name: Third Page
+            <br></br>
+            Image: https://cloudflare-ipfs.com/ipfs/QmeCYyYFBbRLeHtpQrAc7yrDoJL6QGnJ18ZQwENBCdwiJB
+            <br></br>
+            Aspect ratio: 1.91:1
+            <br></br>
+            Input text placeholder: Enter something...
+            <br></br>
+            Buttons:
+            <br></br>
+            1. Back, goes to Page 2
+            <br></br>
+            2. Home, goes to Page One
+
+          </div>
+
+
+
         </div>
       )}
     </div>
