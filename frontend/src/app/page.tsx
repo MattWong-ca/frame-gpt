@@ -1,5 +1,6 @@
 "use client";
-import Image from "next/image";
+import { config } from 'dotenv';
+config();
 import { Space_Grotesk } from 'next/font/google'
 import { ChangeEvent, useState } from "react";
 import './globals.css';
