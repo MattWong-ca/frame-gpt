@@ -3,6 +3,8 @@ import Image from "next/image";
 import { Space_Grotesk } from 'next/font/google'
 import { ChangeEvent, useState } from "react";
 import './globals.css';
+import OpenAI from "openai";
+
 
 const space500 = Space_Grotesk({ subsets: ['latin'], weight: ["500"], style: ["normal"] });
 const space400 = Space_Grotesk({ subsets: ['latin'], weight: ["400"], style: ["normal"] });
@@ -14,9 +16,22 @@ export default function Home() {
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setInputData(event.target.value);
   };
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-  const handleSubmit = () => {
 
+  // async function test() {
+  //   const completion = await openai.chat.completions.create({
+  //     messages: [{ role: "system", content: "You are a helpful assistant." }],
+  //     model: "gpt-3.5-turbo",
+  //   });
+  
+  //   console.log(completion.choices[0]);
+  // }
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(inputData);
+    // test();
   }
 
   return (
@@ -32,18 +47,21 @@ export default function Home() {
         </div>
       </div>
 
-      {isMakeFrame ? (<form onSubmit={handleSubmit} className="flex flex-col items-center mt-6">
-        <div className={`${space400.className}`}>~ The input below works as is, hit Generate to try it out! ~</div>
-        <textarea className={`${space400.className} rounded border border-gray-300 w-full h-96 p-2 overflow-x-auto`} style={{ whiteSpace: 'nowrap' }} value={inputData} onChange={handleChange}></textarea>
-        <div className="w-36 h-8 rounded mt-5 flex flex-col justify-center" style={{ backgroundColor: '#7c65c1' }}>
-          <div className=" flex flex-col justify-center">
-            <button type="submit" className={`${space500.className} text-md text-center text-white`}>✨ Generate ✨</button>
+      {isMakeFrame ? (
+        <form onSubmit={handleSubmit} className="flex flex-col items-center mt-6">
+          <div className={`${space400.className}`}>~ The input below works as is, hit Generate to try it out! ~</div>
+          <textarea className={`${space400.className} rounded border border-gray-300 w-full h-96 p-2 overflow-x-auto`} style={{ whiteSpace: 'nowrap' }} value={inputData} onChange={handleChange}></textarea>
+          <div className="w-36 h-8 rounded mt-5 flex flex-col justify-center" style={{ backgroundColor: '#7c65c1' }}>
+            <div className=" flex flex-col justify-center">
+              <button className={`${space500.className} text-md text-center text-white`}>✨ Generate ✨</button>
+            </div>
           </div>
+        </form>
+      ) : (
+        <div className={`${space400.className} flex flex-col items-center mt-6`}>
+          <div>Coming soon!</div>
         </div>
-      </form>) : (
-      <div className={`${space400.className} flex flex-col items-center mt-6`}>
-        <div>Coming soon!</div>
-      </div>)}
+      )}
     </div>
   );
 }
