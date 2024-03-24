@@ -16,7 +16,7 @@ export default function Home() {
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setInputData(event.target.value);
   };
-  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  const openai = new OpenAI({ apiKey: process.env.KEY });
 
 
   // async function test() {
