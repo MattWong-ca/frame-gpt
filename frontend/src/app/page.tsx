@@ -160,7 +160,7 @@ export default function Home() {
   const [inputData, setInputData] = useState(placeholder);
   const [isMakeFrame, setIsMakeFrame] = useState(true);
   const [neynarLink, setNeynarLink] = useState()
-  const openai = new OpenAI({ apiKey: "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", dangerouslyAllowBrowser: true });
+  const openai = new OpenAI({ apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, dangerouslyAllowBrowser: true });
 
   async function fetchDataFromOpenAI() {
     setOpenAILoading(true);
@@ -178,7 +178,7 @@ export default function Home() {
       method: 'POST',
       headers: {
         accept: 'application/json',
-        api_key: "NEYNAR_API_DOCS",
+        api_key: process.env.NEXT_PUBLIC_NEYNAR_API_KEY!,
         'content-type': 'application/json'
       },
       body: openAIResponse
