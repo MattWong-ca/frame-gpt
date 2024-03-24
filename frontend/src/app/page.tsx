@@ -135,7 +135,7 @@ Here's the expected JSON for this example:
   }
 `;
 export default function Home() {
-  const openai = new OpenAI();
+  const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 
 
   async function test() {
