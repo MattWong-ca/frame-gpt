@@ -12,7 +12,7 @@ const space400 = Space_Grotesk({ subsets: ['latin'], weight: ["400"], style: ["n
 const context = `
 You're a chatbot that will help me parse human input into the proper JSON format needed for an API. Below is a JSON example of what I need given some human text. Please generate different UUIDs yourself for every different page. The "version" should always be "vNext". Aspect ratio can be 1:1 or 1.91:1. There can be up to 4 buttons, with indexes 1-4. If the button mints an NFT, the mint_url should be 'eip155:8453:<insertContractAddress>:1'. If it goes to another page, that page's UUID should be used. If it goes to a URL, then the redirect_url should be the URL given. Assume that input text is always false unless given, in which case use the given placeholder. 
 
-When I send you another set of human text, please send back the JSON.
+When I send you another set of human text, please send back the JSON only without other text.
 
 Human text example:
 Frame Name: Frame Name
