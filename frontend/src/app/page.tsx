@@ -2,10 +2,11 @@
 import { config } from 'dotenv';
 config();
 import { Space_Grotesk } from 'next/font/google'
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import './globals.css';
-import Anthropic from "@anthropic-ai/sdk";
 import OpenAI from "openai";
+import ClipLoader from "react-spinners/ClipLoader";
+import Typewriter from '../../pages/page';
 
 const space500 = Space_Grotesk({ subsets: ['latin'], weight: ["500"], style: ["normal"] });
 const space400 = Space_Grotesk({ subsets: ['latin'], weight: ["400"], style: ["normal"] });
@@ -135,52 +136,86 @@ Here's the expected JSON for this example:
     ]
   }
 `;
+
+const placeholder = `Frame Name: Sample Frame
+
+--Frame One--
+Title: One
+Image URL: https://cloudflare-ipfs.com/ipfs/QmajRLF79ZG3P1iq2WfY5H2SxbACqVZU6LxqLiQBEaWAP9
+Image ratio: 1:1
+Buttons:
+1. Next, goes to Two
+
+--Frame Two--
+Title: Two
+Image URL: https://cloudflare-ipfs.com/ipfs/QmUYMKFHqwxyX6LpZyGT7LMcDmo7SdoKmrQVXvPa8zkk9k
+Image ratio: 1:1
+Buttons:
+1. Back, goes to One
+2. Mint, uses this contract 0xb0d94258bcee18c3fcfbd6b0ac336cdf4e2b67a9`;
+
 export default function Home() {
-  const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
-
-
-  async function test() {
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: "system", content: "Who is Tom Brady?" }],
-      model: "gpt-3.5-turbo",
-    });
-  
-    console.log(completion.choices[0]);
-  }
-  test();
-
-
-  const placeholder = 'Frame Name: Just build it.\n\n--Frame One--\nTitle: Mint Page\nImage URL: https://cloudflare-ipfs.com/ipfs/QmUYMKFHqwxyX6LpZyGT7LMcDmo7SdoKmrQVXvPa8zkk9k\nImage ratio: 1:1\nButtons:\n1. "Mint", uses this contract: 0xb0d94258bcee18c3fcfbd6b0ac336cdf4e2b67a9';
+  const [openAILoading, setOpenAILoading] = useState(false);
+  const [neynarLoading, setNeynarLoading] = useState(false);
+  const [openAIResponse, setOpenAIResponse] = useState<string | null>(null);
   const [inputData, setInputData] = useState(placeholder);
   const [isMakeFrame, setIsMakeFrame] = useState(true);
+  const [neynarLink, setNeynarLink] = useState()
+  const openai = new OpenAI({ apiKey: "", dangerouslyAllowBrowser: true });
+
+  async function fetchDataFromOpenAI() {
+    setOpenAILoading(true);
+    const completion = await openai.chat.completions.create({
+      messages: [{ role: "system", content: context + `\nMake me a JSON for this:\n${inputData}` }],
+      model: "gpt-3.5-turbo",
+    });
+    console.log(completion.choices[0].message.content);
+    setOpenAIResponse(completion.choices[0].message.content);
+  }
+  async function fetchNeynarData() {
+    setNeynarLoading(true);
+    setOpenAILoading(false);
+    const options = {
+      method: 'POST',
+      headers: {
+        accept: 'application/json',
+        api_key: 'NEYNAR_API_DOCS',
+        'content-type': 'application/json'
+      },
+      body: openAIResponse
+    };
+    fetch('https://api.neynar.com/v2/farcaster/frame', options)
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        setNeynarLink(response.link);
+      })
+      .catch(err => console.error(err));
+  }
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setInputData(event.target.value);
   };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(inputData);
+    await fetchDataFromOpenAI();
+    // await new Promise(resolve => setTimeout(resolve, 2000));
+    // await fetchNeynarData();
   }
-
-  
-  // const anthropic = new Anthropic();
-
-// async function test() {
-//   const message = await anthropic.messages.create({
-//     model: 'claude-3-opus-20240229',
-//     max_tokens: 1024,
-//     messages: [
-//       {"role": "user", "content": "Who is Tom Brady?"}
-//     ]
-//   });
-//   console.log(message);
-// };
-// test();
+  useEffect(() => {
+    if (openAIResponse) {
+      fetchNeynarData();
+      setNeynarLoading(false);
+    }
+  }, [openAIResponse]);
 
   return (
     <div className="overflow-hidden h-screen flex flex-col items-center">
       <div className={`${space500.className} text-3xl`} style={{ marginTop: '5vh' }}>FrameGPT</div>
-      <div className={`${space500.className} text-2xl`} style={{ marginTop: '5px' }}>Make a frame that mints a Base NFT</div>
+      <Typewriter
+        texts={["Make a frame that mints a Base NFT", "Make a gallery of photos", "Build an onchain checkout flow"]}
+        period={150}
+      />
+      {/* <div className={`${space500.className} text-2xl`} style={{ marginTop: '5px' }}>Make a frame that mints a Base NFT</div> */}
       <div className="w-80 h-8 rounded mt-5 border-2 flex" style={{ borderColor: '#7c65c1' }}>
         <div className="w-1/2 h-full border-r-2 flex flex-col justify-center" style={{ backgroundColor: isMakeFrame ? '#7c65c1' : 'white', borderColor: '#7c65c1' }}>
           <div onClick={() => setIsMakeFrame(true)} className={`${space500.className} text-md text-center text-white`} style={{ color: isMakeFrame ? 'white' : '#7c65c1' }}>Make a Frame</div>
@@ -191,15 +226,29 @@ export default function Home() {
       </div>
 
       {isMakeFrame ? (
-        <form onSubmit={handleSubmit} className="flex flex-col items-center mt-6">
-          <div className={`${space400.className}`}>~ The input below works as is, hit Generate to try it out! ~</div>
-          <textarea className={`${space400.className} rounded border border-gray-300 w-full h-96 p-2 overflow-x-auto`} style={{ whiteSpace: 'nowrap' }} value={inputData} onChange={handleChange}></textarea>
-          <div className="w-36 h-8 rounded mt-5 flex flex-col justify-center" style={{ backgroundColor: '#7c65c1' }}>
-            <div className=" flex flex-col justify-center">
-              <button className={`${space500.className} text-md text-center text-white`}>✨ Generate ✨</button>
+        <>
+        
+          <form onSubmit={handleSubmit} className="flex flex-col items-center mt-6">
+            <div className={`${space400.className}`}>~ The input below works as is, hit Generate to try it out! ~</div>
+            <textarea className={`${space400.className} rounded border border-gray-300 w-full h-96 p-2 overflow-x-auto`} style={{ whiteSpace: 'nowrap' }} value={inputData} onChange={handleChange}></textarea>
+            {openAILoading || neynarLoading ? (
+              <div className="loader mt-5"></div>
+            ) : (
+              <div className="w-36 h-8 rounded mt-5 flex flex-col justify-center" style={{ backgroundColor: '#7c65c1' }}>
+              <div className=" flex flex-col justify-center">
+                <button className={`${space500.className} text-md text-center text-white`}>✨ Generate ✨</button>
+              </div>
             </div>
-          </div>
-        </form>
+            )}
+            
+            
+          </form>
+          {neynarLink &&
+            <a href={`https://warpcast.com/~/developers/frames?url=${neynarLink}`} target="_blank" rel="noopener noreferrer">
+              <div className={`${space400.className} text-2xl mt-6`} style={{ textDecoration: 'underline', color: 'blue' }}>{neynarLink}</div>
+            </a>
+          }
+        </>
       ) : (
         <div className={`${space400.className} flex flex-col items-center mt-6`}>
           <div>Coming soon!</div>
