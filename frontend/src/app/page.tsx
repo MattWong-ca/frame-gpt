@@ -5,7 +5,7 @@ import { Space_Grotesk } from 'next/font/google'
 import { ChangeEvent, useEffect, useState } from "react";
 import './globals.css';
 import OpenAI from "openai";
-import Typewriter from '../../pages/page';
+import Typewriter from '../../pages/typewriter';
 
 const space500 = Space_Grotesk({ subsets: ['latin'], weight: ["500"], style: ["normal"] });
 const space400 = Space_Grotesk({ subsets: ['latin'], weight: ["400"], style: ["normal"] });
