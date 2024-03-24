@@ -204,7 +204,6 @@ export default function Home() {
       setNeynarLoading(false);
     }
   }, [openAIResponse]);
-
   return (
     <div className="overflow-hidden h-screen flex flex-col items-center">
       <div className={`${space500.className} text-3xl`} style={{ marginTop: '5vh' }}>FrameGPT</div>
