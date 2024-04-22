@@ -221,7 +221,7 @@ export default function Home() {
       </div>
       {isMakeFrame ? (
         <>
-          <form onSubmit={handleSubmit} className="flex flex-col items-center mt-6">
+          <form onSubmit={() => {}} /* use handleSubmit */ className="flex flex-col items-center mt-6">
             <div className={`text-red-500 ${space400.className}`}>
               🚨 API key has been removed, explore the <a href={`https://github.com/MattWong-ca/frame-gpt`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>code</a> instead! 🚨
             </div>
