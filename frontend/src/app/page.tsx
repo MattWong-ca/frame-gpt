@@ -222,7 +222,9 @@ export default function Home() {
       {isMakeFrame ? (
         <>
           <form onSubmit={handleSubmit} className="flex flex-col items-center mt-6">
-            <div className={`${space400.className}`}>~ The input below works as is, hit Generate to try it out! ~</div>
+            <div className={`text-red-500 ${space400.className}`}>
+              🚨 API key has been removed, explore the <a href={`https://github.com/MattWong-ca/frame-gpt`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline' }}>code</a> instead! 🚨
+            </div>
             <textarea className={`${space400.className} rounded border border-gray-300 w-full h-96 p-2 overflow-x-auto`} style={{ whiteSpace: 'nowrap' }} value={inputData} onChange={handleChange}></textarea>
             {openAILoading || neynarLoading ? (
               <div className="loader mt-5"></div>
